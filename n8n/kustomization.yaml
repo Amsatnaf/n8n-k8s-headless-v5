@@ -1,0 +1,13 @@
+
+# n8n/kustomization.yaml (exemplo)
+resources:
+  - main-statefulset.yaml
+  - workers-deployment.yaml
+  - service-headless.yaml
+  - service-nodeport.yaml
+  - pvc.yaml
+
+images:
+  - name: n8nio/n8n
+    newTag: "1.117.3"   # <- versão centralizada aqui
+

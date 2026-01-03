@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: n8n-main
+spec:
+  serviceName: n8n-hs
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n8n
+      role: main
+  template:
+    metadata:
+      labels:
+        app: n8n
+        role: main
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: n8n
+          image: n8nio/n8n:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5678
+          envFrom:
+            - secretRef:
+                name: n8n-secrets
+          env:
+            - name: N8N_SECURE_COOKIE
+              value: "false"
+            - name: N8N_PORT
+              value: "5678"
+            - name: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
+              value: "true"
+          volumeMounts:
+            - name: n8n-data
+              mountPath: /home/node/.n8n
+      volumes:
+        - name: n8n-data
+          persistentVolumeClaim:
+            claimName: n8n-pvc
