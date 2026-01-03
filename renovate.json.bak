@@ -1,0 +1,17 @@
+
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "kubernetes": {
+    // Faz o manager "kubernetes" olhar para os YAMLs dentro de n8n/
+    "managerFilePatterns": ["/n8n/.+\\.ya?ml$/"]
+  },
+  "packageRules": [
+    {
+      "matchPackageNames": ["n8nio/n8n"],
+      "groupName": "n8n image",
+      "automerge": false
+    }
+  ]
+}
+
