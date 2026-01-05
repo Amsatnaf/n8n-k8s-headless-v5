@@ -1,0 +1,6 @@
+# fleet.yaml (na raiz do seu repositório)
+namespace: n8n        # força todos os recursos do bundle a irem para o namespace n8n
+# Se seu kustomization.yaml estiver na raiz, informe a pasta (opcional):
+kustomize:
+  dir: .
+
