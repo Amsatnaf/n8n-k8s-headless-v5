@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: n8n
+  namespace: n8n
+spec:
+  type: ClusterIP            # <- mude para ClusterIP
+  ports:
+    - port: 5678
+      targetPort: 5678
+  selector:
+    app: n8n
+

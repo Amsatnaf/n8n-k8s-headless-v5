@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -33,17 +32,6 @@ spec:
               value: "5678"
             - name: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
               value: "true"
-
-            # --- ⬇️ Variáveis para Ingress/Traefik (HTTP). Troque para HTTPS se usar TLS.
-            - name: N8N_HOST
-              value: "n8n-k3s.com.io"
-            - name: N8N_PROTOCOL
-              value: "http"                      # use "https" se configurar TLS no Ingress
-            - name: WEBHOOK_URL
-              value: "http://n8n-k3s.com.io/"   # troque para https se usar TLS
-            - name: N8N_EDITOR_BASE_URL
-              value: "http://n8n-k3s.com.io"    # opcional; ajuda na construção de links do editor
-
           volumeMounts:
             - name: n8n-data
               mountPath: /home/node/.n8n
@@ -51,4 +39,3 @@ spec:
         - name: n8n-data
           persistentVolumeClaim:
             claimName: n8n-pvc
-
