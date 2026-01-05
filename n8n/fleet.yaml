@@ -1,0 +1,6 @@
+
+# n8n/fleet.yaml
+defaultNamespace: n8n
+kustomize:
+  dir: .
+
