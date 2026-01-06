@@ -1,26 +1,29 @@
 
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": ["config:recommended", "docker:pinDigests"],
   "timezone": "America/Sao_Paulo",
 
-  "kubernetes": {
-    "managerFilePatterns": ["/n8n/.+\\.ya?ml$/"]
+  "enabledManagers": ["kustomize"],
+
+  // Restrito ao arquivo que realmente controla o tag do n8n
+  "kustomize": {
+    "managerFilePatterns": ["/^n8n/kustomization\\.ya?ml$/"]
   },
 
   "packageRules": [
     {
-      // aplica à imagem Docker do n8n encontrada nos manifests
+      "matchManagers": ["kustomize"],
       "matchDatasources": ["docker"],
       "matchPackageNames": ["n8nio/n8n"],
       "groupName": "n8n image",
-      "automerge": true,               // <- habilita merge automático
-      "automergeType": "pr",           // opcional: automerge via PR
-      "pinDigests": true               // opcional: fixa @sha256 por segurança
+      "automerge": true,
+      "automergeType": "pr",
+      "pinDigests": true
     }
   ],
 
-  // faz a plataforma (GitHub/GitLab/Azure) executar o merge assim que tudo estiver ok
+  // Deixa o GitHub fazer o merge assim que branch protection/checks forem satisfeitos
   "platformAutomerge": true
 }
 
