@@ -10,5 +10,5 @@ resources:
 
 images:
   - name: n8nio/n8n
-    newTag: "1.117.3"
+    newTag: "1.120.4"
 
