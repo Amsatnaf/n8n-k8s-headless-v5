@@ -1,16 +1,20 @@
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: n8n
   namespace: n8n
   annotations:
-    # Porta 80 (HTTP) do Traefik por padrão
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # (Opcional) Se quiser forçar que só HTTPS seja servido pelo Traefik:
+    # traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   ingressClassName: traefik
+  tls:
+    - hosts:
+        - n8n.129-213-28-76.sslip.io
+      secretName: n8n-tls
   rules:
-    - host: n8n-k3s.com.io     # <- use o seu hostname "falso" do /etc/hosts
+    - host: n8n.129-213-28-76.sslip.io
       http:
         paths:
           - path: /
