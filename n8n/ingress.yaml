@@ -4,15 +4,18 @@ metadata:
   name: n8n
   namespace: n8n
   annotations:
+    # Diz ao cert-manager para emitir/renovar certificado Let's Encrypt
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    # (Opcional) Se quiser forçar que só HTTPS seja servido pelo Traefik:
-    # traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
+  # Garante que o Traefik (padrão do K3s) controle este Ingress
   ingressClassName: traefik
+
+  # TLS: cert-manager criará/atualizará este Secret automaticamente
   tls:
     - hosts:
         - n8n.129-213-28-76.sslip.io
       secretName: n8n-tls
+
   rules:
     - host: n8n.129-213-28-76.sslip.io
       http:
@@ -24,4 +27,3 @@ spec:
                 name: n8n
                 port:
                   number: 5678
-
