@@ -1,10 +1,10 @@
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: n8n-main
+  namespace: n8n             # ⚠️ Importante: tem que ser o mesmo do Ingress
 spec:
-  serviceName: n8n-hs
+  serviceName: n8n-hs        # Nome do serviço headless interno (DNS entre pods)
   replicas: 1
   selector:
     matchLabels:
@@ -17,32 +17,61 @@ spec:
         role: main
     spec:
       enableServiceLinks: false
+      securityContext:       # Garante permissão de escrita no volume
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
       containers:
         - name: n8n
           image: n8nio/n8n:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5678
+          
+          # --- Configurações de Recursos (Opcional, mas recomendado) ---
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+
+          # --- Health Checks (Essencial para o Ingress não dar 502/503) ---
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5678
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 5678
+            initialDelaySeconds: 10
+            periodSeconds: 5
+
           envFrom:
             - secretRef:
                 name: n8n-secrets
           env:
             - name: N8N_SECURE_COOKIE
-              value: "false"
+              value: "false"      # Pode manter false se o TLS termina no Ingress (Traefik)
             - name: N8N_PORT
               value: "5678"
             - name: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
               value: "true"
 
-            # --- ⬇️ Variáveis para Ingress/Traefik (HTTP). Troque para HTTPS se usar TLS.
+            # --- ⬇️ Variáveis Atualizadas para o Ingress HTTPS ---
             - name: N8N_HOST
-              value: "n8n-k3s.com.io"
+              value: "n8n.129-213-28-76.sslip.io"
             - name: N8N_PROTOCOL
-              value: "http"                      # use "https" se configurar TLS no Ingress
+              value: "https"
             - name: WEBHOOK_URL
-              value: "http://n8n-k3s.com.io/"   # troque para https se usar TLS
+              value: "https://n8n.129-213-28-76.sslip.io/"
             - name: N8N_EDITOR_BASE_URL
-              value: "http://n8n-k3s.com.io"    # opcional; ajuda na construção de links do editor
+              value: "https://n8n.129-213-28-76.sslip.io"
 
           volumeMounts:
             - name: n8n-data
@@ -51,4 +80,3 @@ spec:
         - name: n8n-data
           persistentVolumeClaim:
             claimName: n8n-pvc
-
