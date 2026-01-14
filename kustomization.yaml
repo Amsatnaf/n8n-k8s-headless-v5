@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: n8n
 
 resources:
-  - namespace.yaml
+  ##- namespace.yaml
   - secrets.yaml
   - hpa.yaml
   - postgres        # diretório com kustomization.yaml próprio
