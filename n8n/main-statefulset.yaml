@@ -65,13 +65,13 @@ spec:
 
             # --- ⬇️ Variáveis Atualizadas para o Ingress HTTPS ---
             - name: N8N_HOST
-              value: "n8n.129-213-28-76.xip.io"
+              value: "n8n.129-213-28-76.sslip.io"
             - name: N8N_PROTOCOL
               value: "https"
             - name: WEBHOOK_URL
-              value: "https://8n.129-213-28-76.xip.io/"
+              value: "https://8n.129-213-28-76.sslip.io/"
             - name: N8N_EDITOR_BASE_URL
-              value: "https://n8n.129-213-28-76.xip.io"
+              value: "https://n8n.129-213-28-76.sslip.io"
 
           volumeMounts:
             - name: n8n-data
