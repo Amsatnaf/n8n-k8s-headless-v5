@@ -65,13 +65,13 @@ spec:
 
             # --- ⬇️ Variáveis Atualizadas para o Ingress HTTPS ---
             - name: N8N_HOST
-              value: "n8n.129-213-28-76.traefik.me"
+              value: "n8n.129-213-28-76.xip.io"
             - name: N8N_PROTOCOL
               value: "https"
             - name: WEBHOOK_URL
-              value: "https://8n.129-213-28-76.traefik.me/"
+              value: "https://8n.129-213-28-76.xip.io/"
             - name: N8N_EDITOR_BASE_URL
-              value: "https://n8n.129-213-28-76.traefik.me"
+              value: "https://n8n.129-213-28-76.xip.io"
 
           volumeMounts:
             - name: n8n-data
