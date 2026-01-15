@@ -1,0 +1,39 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n8n-main
+  labels:
+    app: n8n
+    role: main
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n8n
+      role: main
+  template:
+    metadata:
+      labels:
+        app: n8n
+        role: main
+    spec:
+      containers:
+        - name: n8n
+          image: n8nio/n8n:1.123.6
+          ports:
+            - containerPort: 5678
+          env:
+            - name: N8N_EXECUTIONS_MODE
+              value: "regular"
+            - name: DB_TYPE
+              value: "sqlite"
+            - name: N8N_PROTOCOL
+              value: "https"
+            - name: N8N_HOST
+              value: "n8n-homol.129.213.28.76.sslip.io"
+            - name: N8N_EDITOR_BASE_URL
+              value: "https://n8n-homol.129.213.28.76.sslip.io"
+            - name: WEBHOOK_URL
+              value: "https://n8n-homol.129.213.28.76.sslip.io/"
+
