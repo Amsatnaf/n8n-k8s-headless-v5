@@ -4,20 +4,15 @@ metadata:
   name: n8n
   namespace: n8n
   annotations:
-    # Diz ao cert-manager para emitir/renovar certificado Let's Encrypt
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
-  # Garante que o Traefik (padrão do K3s) controle este Ingress
   ingressClassName: traefik
-
-  # TLS: cert-manager criará/atualizará este Secret automaticamente
   tls:
     - hosts:
-        - n8n.129-213-28-76.sslip.io
-      secretName: n8n-tls
-
+        - app-n8n.129-213-28-76.sslip.io  # <--- MUDAR AQUI
+      secretName: n8n-tls-new             # <--- Mudei o nome do secret só pra garantir que ele crie um novo
   rules:
-    - host: n8n.129-213-28-76.sslip.io
+    - host: app-n8n.129-213-28-76.sslip.io # <--- MUDAR AQUI TAMBÉM
       http:
         paths:
           - path: /
