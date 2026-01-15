@@ -1,0 +1,3 @@
+defaultNamespace: n8n
+helm:
+  releaseName: gitops-n8n-n8n  # <--- Forçamos o nome que ele está reclamando que já existe
