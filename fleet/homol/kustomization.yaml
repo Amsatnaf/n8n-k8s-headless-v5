@@ -6,6 +6,5 @@ kind: Kustomization
 namespace: n8n-homol
 
 resources:
-  - namespace.yaml
   - n8n
 
