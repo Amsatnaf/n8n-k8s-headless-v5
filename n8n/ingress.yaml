@@ -9,10 +9,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - app-n8n.129-213-28-76.sslip.io  # <--- MUDAR AQUI
+        - app-n8n.129-213-28-76.nip.io  # <--- MUDAR AQUI
       secretName: n8n-tls-new             # <--- Mudei o nome do secret só pra garantir que ele crie um novo
   rules:
-    - host: app-n8n.129-213-28-76.sslip.io # <--- MUDAR AQUI TAMBÉM
+    - host: app-n8n.129-213-28-76.nip.io # <--- MUDAR AQUI TAMBÉM
       http:
         paths:
           - path: /
