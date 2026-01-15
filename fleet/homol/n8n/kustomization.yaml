@@ -15,5 +15,4 @@ resources:
 images:
   - name: n8nio/n8n
     newTag: "1.123.6"
-`
 
