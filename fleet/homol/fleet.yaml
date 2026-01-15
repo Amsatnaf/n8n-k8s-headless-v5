@@ -1,0 +1,12 @@
+
+defaultNamespace: n8n-homol
+
+kustomize:
+  dir: .
+  patchesStrategicMerge:
+    - patches/namespace-patch.yaml
+    - patches/ingress-homol.yaml
+    - patches/statefulset-homol-stateless.yaml
+
+prune: false
+

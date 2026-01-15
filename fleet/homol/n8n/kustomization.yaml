@@ -1,0 +1,18 @@
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  # Substitui o StatefulSet por um Deployment stateless
+  - deployment-homol.yaml
+
+  # Serviços e Ingress continuam (sem PVC)
+  - service-web.yaml
+  # Se você não precisa de DNS headless/peer discovery, pode REMOVER o headless:
+  # - service-headless.yaml
+  - ingress.yaml
+
+images:
+  - name: n8nio/n8n
+    newTag: "1.123.6"
+

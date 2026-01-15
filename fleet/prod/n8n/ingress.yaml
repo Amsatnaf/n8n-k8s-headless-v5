@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: n8n
+  namespace: n8n
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        # Trocando para sslip.io
+        - n8n.129.213.28.76.sslip.io
+      secretName: n8n-tls-sslip.io  # Mudei o nome de novo para limpar o histórico
+  rules:
+    - host: n8n.129.213.28.76.sslip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: n8n
+                port:
+                  number: 5678
